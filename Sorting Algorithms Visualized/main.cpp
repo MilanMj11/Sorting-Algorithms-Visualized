@@ -55,8 +55,19 @@ void Draw_BubbleSort(RenderWindow &window) {
                 swap(a[i], a[j]);
 
                 window.clear();
+
+                rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+                rectangle[i].setFillColor(Color::Red);
+                rectangle[j].setPosition(10 + a[j] * lines_and_spaces, resolution_height - 10);
+                rectangle[j].setFillColor(Color::Red);
+                window.draw(rectangle[i]);
+                window.draw(rectangle[j]);
+
+
                 for (int t = 0; t < N; t++) {
-                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);     /// Position on the X axis
+                    if (t == i or t == j) continue;
+                    rectangle[t].setFillColor(Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10); 
                     window.draw(rectangle[t]);
                 }
                 window.display();
@@ -152,8 +163,6 @@ int main()
         window.display();
 
     }
- 
-
 
     return 0;
 }

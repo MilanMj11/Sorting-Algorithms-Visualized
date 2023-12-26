@@ -16,6 +16,7 @@ int resolution_height = 1080;
 
 const int N = 200;
 vector<int> a(N);
+vector<int> aux(N);
 
 RectangleShape rectangle[N];
 
@@ -121,6 +122,9 @@ int main()
 {
     //init_vector(a);
     randomise_vector(a);
+    for (int i = 0; i < N; i++) {
+        aux[i] = a[i];
+    }
     //print_vector(a);
 
 
@@ -195,6 +199,8 @@ int main()
 
     RenderWindow window(VideoMode(resolution_width, resolution_height), "Sorting Visualized");
     AppState currentState = AppState::Menu;
+    int button_number = -1;
+
 
     while (window.isOpen()) {
         
@@ -203,12 +209,12 @@ int main()
             if (event.type == Event::Closed)
                 window.close();
 
-            if (event.type == Event::MouseButtonPressed and event.mouseButton.button == Mouse::Left) {
+            if (currentState == AppState::Menu and event.type == Event::MouseButtonReleased and event.mouseButton.button == Mouse::Left) {
+                // MAYBE MOUSEBUTTONPRESSED
 
                 Vector2i mousePosition = Mouse::getPosition(window);
 
                 /// Check if mouse is over the button
-                int button_number = -1;
                 for (int i = 0; i < 9; i++) {
                     if (mousePosition.x > button[i].getPosition().x &&
                         mousePosition.x < button[i].getPosition().x + button[i].getSize().x &&
@@ -221,21 +227,38 @@ int main()
 
                 if (button_number != -1) {
                     /// Solving the pressed button;
-                    Solve(button_number);
+                    currentState = AppState::Visualization;
+                    continue;
                 }
 
             }
+
+            /*
+            */
+            if (currentState == AppState::Visualization and event.type == Event::MouseButtonReleased and event.mouseButton.button == Mouse::Left) {
+                currentState = AppState::Menu;
+                button_number = -1;
+            }
+
         }
 
         window.clear();
         
         
         if (currentState == AppState::Menu) {
-            
+            // button_number = -1;
             /// DRAW THE MENU BUTTONS
             for (int i = 0; i < 9; i++) {
                 window.draw(button[i]);
                 window.draw(text[i]);
+            }
+
+        }
+
+        if (currentState == AppState::Visualization) {
+            /// Solve(button_number);
+            for (int i = 0; i < N; i++) {
+                window.draw(rectangle[i]);
             }
 
         }

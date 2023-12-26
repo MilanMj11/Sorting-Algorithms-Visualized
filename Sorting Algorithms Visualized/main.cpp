@@ -6,9 +6,10 @@
 #include <chrono>
 #include <thread>
 
-
 using namespace std;
 using namespace sf;
+
+/// --------------------------------- INITIAL VALUES ----------------------------------------
 
 int resolution_width = 1920;
 int resolution_height = 1080;
@@ -18,7 +19,7 @@ vector<int> a(N);
 
 RectangleShape rectangle[N];
 
-float actual_display_width = resolution_width - 20;     /// 20 - represents the spaces to the edge of the screen
+float actual_display_width = resolution_width - 20;     /// 20 - represents the spaces to the edge of the screen ( 10 + 10 )
 float lines_and_spaces = actual_display_width / N;
 float line_width = 8.0 * (lines_and_spaces / 10.0);   /// 80% line
 float space_width = 2.0 * (lines_and_spaces / 10.0);  /// 20% space
@@ -26,6 +27,13 @@ float space_width = 2.0 * (lines_and_spaces / 10.0);  /// 20% space
 float actual_display_height = resolution_height - 20;
 float smallest_line = 5;
 float lines_height_diff = (actual_display_height - smallest_line) / (N - 1);
+
+enum class AppState {
+    Menu,
+    Visualization
+};
+
+/// --------------------------------- INITIAL VALUES ----------------------------------------
 
 void init_vector(vector<int>& a) {
     for (int i = 0; i < N; i++)
@@ -104,7 +112,7 @@ int main()
 {
     //init_vector(a);
     randomise_vector(a);
-    print_vector(a);
+    //print_vector(a);
 
 
     // ------------------------------------- CREATING LINES -----------------------------
@@ -118,20 +126,82 @@ int main()
 
 
     // ------------------------------------- CREATING LINES -----------------------------
-   
+
+
+    // ------------------------------------- CREATING BUTTONS -------------------------------
+
+    float lineSection = (resolution_height / 3.0);
+    float buttonHeight = (lineSection * 7.0 / 10.0);
+
+    float columnSection = (resolution_width / 3.0);
+    float buttonWidth = (columnSection * 7.0 / 10.0);
+
+    RectangleShape button[9];
+    for (int i = 0; i < 9; i++) {
+        button[i].setSize(Vector2f(buttonWidth, buttonHeight));
+    }
+
+    Font font;
+    if (!font.loadFromFile("res/fonts/coolvetica/coolvetica rg.otf")) {
+        cout << "Font Error!";
+        return 1;
+    }
+
+    for (int i = 0; i < 9; i++) {
+        button[i].setPosition(Vector2f(columnSection * (i % 3) + columnSection * 1.5 / 10.0, lineSection * (i / 3) + lineSection * 1.5 / 10.0));
+    }
+
+    /*
+    button[0].setPosition(Vector2f(columnSection * 0 + columnSection * 1.5 / 10.0, lineSection * 0 + lineSection * 1.5 / 10.0));
+    button[1].setPosition(Vector2f(columnSection * 1 + columnSection * 1.5 / 10.0, lineSection * 0 + lineSection * 1.5 / 10.0));
+    button[2].setPosition(Vector2f(columnSection * 2 + columnSection * 1.5 / 10.0, lineSection * 0 + lineSection * 1.5 / 10.0));
+    button[3].setPosition(Vector2f(columnSection * 0 + columnSection * 1.5 / 10.0, lineSection * 1 + lineSection * 1.5 / 10.0));
+    button[4].setPosition(Vector2f(columnSection * 1 + columnSection * 1.5 / 10.0, lineSection * 1 + lineSection * 1.5 / 10.0));
+    button[5].setPosition(Vector2f(columnSection * 2 + columnSection * 1.5 / 10.0, lineSection * 1 + lineSection * 1.5 / 10.0));
+    button[6].setPosition(Vector2f(columnSection * 0 + columnSection * 1.5 / 10.0, lineSection * 2 + lineSection * 1.5 / 10.0));
+    button[7].setPosition(Vector2f(columnSection * 1 + columnSection * 1.5 / 10.0, lineSection * 2 + lineSection * 1.5 / 10.0));
+    button[8].setPosition(Vector2f(columnSection * 2 + columnSection * 1.5 / 10.0, lineSection * 2 + lineSection * 1.5 / 10.0));
+    */
+
+    
+    float fontSize = 70;
+    float centerX, centerY;
+    
+    Text text[9];
+
+    text[0].setString("Bubble Sort");
+    text[1].setString("Merge Sort");
+    text[2].setString("Quick Sort");
+    text[3].setString("Selection Sort");
+    text[4].setString("Radix Sort");
+    text[5].setString("Heap Sort");
+    text[6].setString("Bucket Sort");
+    text[7].setString("Counting Sort");
+    text[8].setString("Insertion Sort");
+
+    for (int i = 0; i < 9; i++) {
+        text[i].setFont(font);
+        text[i].setCharacterSize(fontSize);
+
+        FloatRect textBounds = text[i].getLocalBounds();
+        FloatRect rectBounds = button[i].getLocalBounds();
+        text[i].setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+
+        centerX = button[i].getPosition().x + rectBounds.width / 2;
+        centerY = button[i].getPosition().y + rectBounds.height / 2;
+
+        text[i].setPosition(centerX, centerY);
+        text[i].setFillColor(Color::Black);
+    }
+
+    // ------------------------------------- CREATING BUTTONS -------------------------------
+
+
+
     RenderWindow window(VideoMode(resolution_width, resolution_height), "Sorting Visualized");
     
-    if (window.isOpen()) {
-        for (int i = 0; i < N; i++) {
-            window.draw(rectangle[i]);
-        }
-    }
-    window.display();
 
-    chrono::seconds duration(2);
-    this_thread::sleep_for(duration);
-
-    bool sorted = false;
+    AppState currentState = AppState::Menu;
 
     while (window.isOpen()) {
         
@@ -139,15 +209,29 @@ int main()
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
+
+            if (event.type == Event::MouseButtonPressed and event.mouseButton.button == Mouse::Left) {
+
+                Vector2i mousePosition = Mouse::getPosition(window);
+
+                /// Check if mouse if over the button
+            }
         }
 
         window.clear();
         
-        /*
-        for (int i = 0; i < N; i++) {
-            window.draw(rectangle[i]);
+        
+        if (currentState == AppState::Menu) {
+            
+            /// DRAW THE MENU BUTTONS
+            for (int i = 0; i < 9; i++) {
+                window.draw(button[i]);
+                window.draw(text[i]);
+            }
+
         }
-        */
+
+        /*
         if(CheckSorted(a) == false)
             Draw_BubbleSort(window);
         else {
@@ -159,6 +243,7 @@ int main()
                 window.draw(rectangle[i]);
             }
         }
+        */
 
         window.display();
 

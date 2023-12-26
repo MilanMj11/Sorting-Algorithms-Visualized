@@ -109,11 +109,12 @@ void Draw_SortedAnimation(RenderWindow &window) {
 
 }
 
-void Solve(int buttonNumber) {
+void Solve(int buttonNumber, RenderWindow &window) {
 
     if (buttonNumber == 0) {
         /// This is the Bubble Sort
-
+        Draw_BubbleSort(window);
+        Draw_SortedAnimation(window);
     }
 
 }
@@ -200,7 +201,7 @@ int main()
     RenderWindow window(VideoMode(resolution_width, resolution_height), "Sorting Visualized");
     AppState currentState = AppState::Menu;
     int button_number = -1;
-
+    bool solved = false;
 
     while (window.isOpen()) {
         
@@ -248,6 +249,7 @@ int main()
         if (currentState == AppState::Menu) {
             // button_number = -1;
             /// DRAW THE MENU BUTTONS
+            solved = false;
             for (int i = 0; i < 9; i++) {
                 window.draw(button[i]);
                 window.draw(text[i]);
@@ -256,26 +258,17 @@ int main()
         }
 
         if (currentState == AppState::Visualization) {
-            /// Solve(button_number);
+            
+            if (solved == false) {
+                Solve(button_number, window);
+                solved = true;
+            }
+
             for (int i = 0; i < N; i++) {
                 window.draw(rectangle[i]);
             }
 
         }
-
-        /*
-        if(CheckSorted(a) == false)
-            Draw_BubbleSort(window);
-        else {
-            if (sorted == false) {
-                Draw_SortedAnimation(window);
-                sorted = true;
-            }
-            for (int i = 0; i < N; i++) {
-                window.draw(rectangle[i]);
-            }
-        }
-        */
 
         window.display();
 

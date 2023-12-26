@@ -56,6 +56,12 @@ void print_vector(vector<int> &a) {
         cout << a[i] << ' ';
 }
 
+void reset_vector(vector<int>& a) {
+    for (int i = 0; i < N; i++) {
+        a[i] = aux[i];
+    }
+}
+
 void Draw_BubbleSort(RenderWindow &window) {
     
     for (int i = 0; i < N-1; i++) {
@@ -111,8 +117,18 @@ void Draw_SortedAnimation(RenderWindow &window) {
 
 void Solve(int buttonNumber, RenderWindow &window) {
 
+    window.clear();
+    for (int i = 0; i < N; i++) {
+        window.draw(rectangle[i]);
+    }
+    window.display();
+
+    chrono::seconds duration(2);
+    this_thread::sleep_for(duration);
+
     if (buttonNumber == 0) {
         /// This is the Bubble Sort
+        
         Draw_BubbleSort(window);
         Draw_SortedAnimation(window);
     }
@@ -239,6 +255,14 @@ int main()
             if (currentState == AppState::Visualization and event.type == Event::MouseButtonReleased and event.mouseButton.button == Mouse::Left) {
                 currentState = AppState::Menu;
                 button_number = -1;
+
+                reset_vector(a);
+                for (int i = 0; i < N; i++) {
+                    rectangle[i].setSize(Vector2f(line_width, smallest_line + lines_height_diff * i)); /// dimensions of each line
+                    rectangle[i].setFillColor(Color::White);         /// color
+                    rectangle[i].setRotation(180);                   /// so I draw it from base up
+                    rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);     /// Position on the X axis
+                }
             }
 
         }

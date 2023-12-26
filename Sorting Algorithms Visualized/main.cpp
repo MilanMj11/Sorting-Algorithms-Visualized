@@ -108,6 +108,15 @@ void Draw_SortedAnimation(RenderWindow &window) {
 
 }
 
+void Solve(int buttonNumber) {
+
+    if (buttonNumber == 0) {
+        /// This is the Bubble Sort
+
+    }
+
+}
+
 int main()
 {
     //init_vector(a);
@@ -128,7 +137,7 @@ int main()
     // ------------------------------------- CREATING LINES -----------------------------
 
 
-    // ------------------------------------- CREATING BUTTONS -------------------------------
+    // ------------------------------------- CREATING BUTTONS AND TEXT -------------------------------
 
     float lineSection = (resolution_height / 3.0);
     float buttonHeight = (lineSection * 7.0 / 10.0);
@@ -141,29 +150,16 @@ int main()
         button[i].setSize(Vector2f(buttonWidth, buttonHeight));
     }
 
+    for (int i = 0; i < 9; i++) {
+        button[i].setPosition(Vector2f(columnSection * (i % 3) + columnSection * 1.5 / 10.0, lineSection * (i / 3) + lineSection * 1.5 / 10.0));
+    }
+
     Font font;
     if (!font.loadFromFile("res/fonts/coolvetica/coolvetica rg.otf")) {
         cout << "Font Error!";
         return 1;
     }
 
-    for (int i = 0; i < 9; i++) {
-        button[i].setPosition(Vector2f(columnSection * (i % 3) + columnSection * 1.5 / 10.0, lineSection * (i / 3) + lineSection * 1.5 / 10.0));
-    }
-
-    /*
-    button[0].setPosition(Vector2f(columnSection * 0 + columnSection * 1.5 / 10.0, lineSection * 0 + lineSection * 1.5 / 10.0));
-    button[1].setPosition(Vector2f(columnSection * 1 + columnSection * 1.5 / 10.0, lineSection * 0 + lineSection * 1.5 / 10.0));
-    button[2].setPosition(Vector2f(columnSection * 2 + columnSection * 1.5 / 10.0, lineSection * 0 + lineSection * 1.5 / 10.0));
-    button[3].setPosition(Vector2f(columnSection * 0 + columnSection * 1.5 / 10.0, lineSection * 1 + lineSection * 1.5 / 10.0));
-    button[4].setPosition(Vector2f(columnSection * 1 + columnSection * 1.5 / 10.0, lineSection * 1 + lineSection * 1.5 / 10.0));
-    button[5].setPosition(Vector2f(columnSection * 2 + columnSection * 1.5 / 10.0, lineSection * 1 + lineSection * 1.5 / 10.0));
-    button[6].setPosition(Vector2f(columnSection * 0 + columnSection * 1.5 / 10.0, lineSection * 2 + lineSection * 1.5 / 10.0));
-    button[7].setPosition(Vector2f(columnSection * 1 + columnSection * 1.5 / 10.0, lineSection * 2 + lineSection * 1.5 / 10.0));
-    button[8].setPosition(Vector2f(columnSection * 2 + columnSection * 1.5 / 10.0, lineSection * 2 + lineSection * 1.5 / 10.0));
-    */
-
-    
     float fontSize = 70;
     float centerX, centerY;
     
@@ -194,13 +190,10 @@ int main()
         text[i].setFillColor(Color::Black);
     }
 
-    // ------------------------------------- CREATING BUTTONS -------------------------------
-
+    // ------------------------------------- CREATING BUTTONS AND TEXT -------------------------------
 
 
     RenderWindow window(VideoMode(resolution_width, resolution_height), "Sorting Visualized");
-    
-
     AppState currentState = AppState::Menu;
 
     while (window.isOpen()) {
@@ -214,7 +207,23 @@ int main()
 
                 Vector2i mousePosition = Mouse::getPosition(window);
 
-                /// Check if mouse if over the button
+                /// Check if mouse is over the button
+                int button_number = -1;
+                for (int i = 0; i < 9; i++) {
+                    if (mousePosition.x > button[i].getPosition().x &&
+                        mousePosition.x < button[i].getPosition().x + button[i].getSize().x &&
+                        mousePosition.y > button[i].getPosition().y &&
+                        mousePosition.y < button[i].getPosition().y + button[i].getSize().y) {
+                        button_number = i;
+                        break;
+                    }
+                }
+
+                if (button_number != -1) {
+                    /// Solving the pressed button;
+                    Solve(button_number);
+                }
+
             }
         }
 

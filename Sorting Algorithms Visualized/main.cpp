@@ -14,7 +14,9 @@ using namespace sf;
 int resolution_width = 1920;
 int resolution_height = 1080;
 
-const int N = 200;
+const int INF = (1 << 29);
+
+const int N = 400;
 vector<int> a(N);
 vector<int> aux(N);
 
@@ -35,6 +37,8 @@ enum class AppState {
 };
 
 /// --------------------------------- INITIAL VALUES ----------------------------------------
+
+void printVisualization(RenderWindow &);
 
 void init_vector(vector<int>& a) {
     for (int i = 0; i < N; i++)
@@ -115,6 +119,85 @@ void Draw_SortedAnimation(RenderWindow &window) {
 
 }
 
+
+///____________________________________________
+void concat(vector<int> &a, int st, int dr, RenderWindow &window) {
+    int mij = (st + dr) / 2;
+    int dim1 = mij - st + 1;
+    int dim2 = dr - mij;
+
+    int* b = new int[dim1 + 5];
+    int* c = new int[dim2 + 5];
+
+    int k = 0;
+    for (int i = st; i <= mij; i++) b[++k] = a[i];
+    b[++k] = INF;
+    k = 0;
+    for (int i = mij + 1; i <= dr; i++) c[++k] = a[i];
+    c[++k] = INF;
+    int ind1 = 1, ind2 = 1;
+    k = st - 1;
+
+
+    while (true) {
+        if (b[ind1] == INF and c[ind2] == INF) break;
+        if (b[ind1] < c[ind2] or c[ind2] == INF) {
+            a[++k] = b[ind1];
+            ind1++;
+            continue;
+        }
+        if (b[ind1] >= c[ind2] or b[ind1] == INF) {
+            a[++k] = c[ind2];
+            ind2++;
+            continue;
+        }
+        
+        /*
+        rectangle[b[ind1]].setFillColor(Color::Red);
+        rectangle[c[ind2]].setFillColor(Color::Red);
+        //printVisualization(window);
+        */
+
+    }
+    delete[] b;
+    delete[] c;
+}
+
+void printVisualization(RenderWindow& window) {
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void merge_sort(vector<int> &a, int st, int dr, RenderWindow &window) {
+    if (st >= dr) return;
+    int mij = (st + dr) / 2;
+
+    merge_sort(a, st, mij, window);
+
+    printVisualization(window);
+
+    merge_sort(a, mij + 1, dr, window);
+
+    printVisualization(window);
+
+    concat(a, st, dr, window);
+
+
+    printVisualization(window);
+
+
+}
+///____________________________________________
+
+void Draw_MergeSort(RenderWindow& window) {
+    merge_sort(a, 0, N-1, window);
+}
+
 void Solve(int buttonNumber, RenderWindow &window) {
 
     window.clear();
@@ -133,6 +216,13 @@ void Solve(int buttonNumber, RenderWindow &window) {
         Draw_SortedAnimation(window);
     }
 
+    if (buttonNumber == 1) {
+        /// This is the Merge Sort
+
+        Draw_MergeSort(window);
+        Draw_SortedAnimation(window);
+    }
+
 }
 
 int main()
@@ -143,6 +233,7 @@ int main()
         aux[i] = a[i];
     }
     //print_vector(a);
+
 
 
     // ------------------------------------- CREATING LINES -----------------------------

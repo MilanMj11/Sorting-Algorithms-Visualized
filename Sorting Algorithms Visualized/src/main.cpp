@@ -45,36 +45,6 @@ void reset_vector(vector<int>& a) {
     }
 }
 
-void Draw_BubbleSort(RenderWindow &window) {
-    
-    for (int i = 0; i < N-1; i++) {
-        for (int j = i+1; j < N; j++) {
-            if (a[i] > a[j]) {
-                swap(a[i], a[j]);
-
-                window.clear();
-
-                rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
-                rectangle[i].setFillColor(Color::Red);
-                rectangle[j].setPosition(10 + a[j] * lines_and_spaces, resolution_height - 10);
-                rectangle[j].setFillColor(Color::Red);
-                window.draw(rectangle[i]);
-                window.draw(rectangle[j]);
-
-
-                for (int t = 0; t < N; t++) {
-                    if (t == i or t == j) continue;
-                    rectangle[t].setFillColor(Color::White);
-                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10); 
-                    window.draw(rectangle[t]);
-                }
-                window.display();
-
-            }
-        }
-    }
-
-}
 
 bool CheckSorted(vector<int>& a) {
     bool ok = true;
@@ -87,127 +57,10 @@ bool CheckSorted(vector<int>& a) {
     return ok;
 }
 
-void Draw_SortedAnimation(RenderWindow &window) {
-    //window.clear();
-    for (int i = 0; i < N; i++) {
 
-        rectangle[i].setFillColor(Color::Green);
-        window.draw(rectangle[i]);
-        window.display();
-    }
-
-}
 
 
 ///____________________________________________
-void concat(vector<int> &a, int st, int dr, RenderWindow &window) {
-    int mij = (st + dr) / 2;
-    int dim1 = mij - st + 1;
-    int dim2 = dr - mij;
-
-    int* b = new int[dim1 + 5];
-    int* c = new int[dim2 + 5];
-
-    int k = 0;
-    for (int i = st; i <= mij; i++) b[++k] = a[i];
-    b[++k] = INF;
-    k = 0;
-    for (int i = mij + 1; i <= dr; i++) c[++k] = a[i];
-    c[++k] = INF;
-    int ind1 = 1, ind2 = 1;
-    k = st - 1;
-
-
-    while (true) {
-        if (b[ind1] == INF and c[ind2] == INF) break;
-        if (b[ind1] < c[ind2] or c[ind2] == INF) {
-            a[++k] = b[ind1];
-            ind1++;
-            continue;
-        }
-        if (b[ind1] >= c[ind2] or b[ind1] == INF) {
-            a[++k] = c[ind2];
-            ind2++;
-            continue;
-        }
-        
-        /*
-        rectangle[b[ind1]].setFillColor(Color::Red);
-        rectangle[c[ind2]].setFillColor(Color::Red);
-        //printVisualization(window);
-        */
-
-    }
-    delete[] b;
-    delete[] c;
-}
-
-void printVisualization(RenderWindow& window) {
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
-}
-
-void merge_sort(vector<int> &a, int st, int dr, RenderWindow &window) {
-    if (st >= dr) return;
-    int mij = (st + dr) / 2;
-
-    merge_sort(a, st, mij, window);
-
-    printVisualization(window);
-
-    merge_sort(a, mij + 1, dr, window);
-
-    printVisualization(window);
-
-    concat(a, st, dr, window);
-
-
-    printVisualization(window);
-
-
-}
-///____________________________________________
-
-void Draw_MergeSort(RenderWindow& window) {
-    merge_sort(a, 0, N-1, window);
-}
-
-void Solve(int buttonNumber, RenderWindow &window) {
-
-    window.clear();
-    for (int i = 0; i < N; i++) {
-        window.draw(rectangle[i]);
-    }
-    window.display();
-
-    chrono::seconds duration(2);
-    this_thread::sleep_for(duration);
-
-    if (buttonNumber == 0) {
-        /// This is the Bubble Sort
-        
-        Draw_BubbleSort(window);
-        Draw_SortedAnimation(window);
-    }
-
-    if (buttonNumber == 1) {
-        /// This is the Merge Sort
-        /// !!!!! GET BACK ON THIS , IT'S NOT PROPERLY DONE
-        Draw_MergeSort(window);
-        Draw_SortedAnimation(window);
-    }
-        
-    if (buttonNumber == 2) {
-        /// This si the Quick Sort
-
-    }
-
-}
 
 int main()
 {

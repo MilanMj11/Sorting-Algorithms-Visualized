@@ -68,6 +68,16 @@ void createText() {
     
 }
 
+void printVisualization(sf::RenderWindow& window) {
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
 void Solve(int buttonNumber, sf::RenderWindow& window) {
 
     window.clear();
@@ -111,6 +121,9 @@ void Draw_SortedAnimation(sf::RenderWindow& window) {
 
 }
 
+
+// ------------------------------------- BUBBLE SORT ------------------------------------------
+
 void Draw_BubbleSort(sf::RenderWindow& window) {
 
     for (int i = 0; i < N - 1; i++) {
@@ -141,6 +154,11 @@ void Draw_BubbleSort(sf::RenderWindow& window) {
     }
 
 }
+
+// ------------------------------------- BUBBLE SORT ------------------------------------------
+
+
+// --------------------------------------- MERGE SORT -----------------------------------------
 
 void concat(std::vector<int>& a, int st, int dr, sf::RenderWindow& window) {
     int mij = (st + dr) / 2;
@@ -184,16 +202,6 @@ void concat(std::vector<int>& a, int st, int dr, sf::RenderWindow& window) {
     delete[] c;
 }
 
-void printVisualization(sf::RenderWindow& window) {
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
-}
-
 void merge_sort(std::vector<int>& a, int st, int dr, sf::RenderWindow& window) {
     if (st >= dr) return;
     int mij = (st + dr) / 2;
@@ -213,8 +221,9 @@ void merge_sort(std::vector<int>& a, int st, int dr, sf::RenderWindow& window) {
 
 
 }
-///____________________________________________
 
 void Draw_MergeSort(sf::RenderWindow& window) {
     merge_sort(a, 0, N - 1, window);
 }
+
+// --------------------------------------- MERGE SORT -----------------------------------------

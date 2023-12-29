@@ -17,7 +17,6 @@ using namespace sf;
 
 /// --------------------------------- INITIAL VALUES ----------------------------------------
 
-void printVisualization(RenderWindow &);
 
 void init_vector(vector<int>& a) {
     for (int i = 0; i < N; i++)
@@ -45,7 +44,6 @@ void reset_vector(vector<int>& a) {
     }
 }
 
-
 bool CheckSorted(vector<int>& a) {
     bool ok = true;
     for (int i = 1; i < N; i++) {
@@ -57,10 +55,6 @@ bool CheckSorted(vector<int>& a) {
     return ok;
 }
 
-
-
-
-///____________________________________________
 
 int main()
 {
@@ -80,7 +74,6 @@ int main()
     // ------------------------------------- CREATING BUTTONS AND TEXT -------------------------------
     createButtons();
     createText();
-    
     // ------------------------------------- CREATING BUTTONS AND TEXT -------------------------------
     
     

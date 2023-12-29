@@ -1,3 +1,5 @@
+#include "../headers/globals.h"
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <algorithm>
@@ -11,30 +13,6 @@ using namespace sf;
 
 /// --------------------------------- INITIAL VALUES ----------------------------------------
 
-int resolution_width = 1920;
-int resolution_height = 1080;
-
-const int INF = (1 << 29);
-
-const int N = 400;
-vector<int> a(N);
-vector<int> aux(N);
-
-RectangleShape rectangle[N];
-
-float actual_display_width = resolution_width - 20;     /// 20 - represents the spaces to the edge of the screen ( 10 + 10 )
-float lines_and_spaces = actual_display_width / N;
-float line_width = 8.0 * (lines_and_spaces / 10.0);   /// 80% line
-float space_width = 2.0 * (lines_and_spaces / 10.0);  /// 20% space
-
-float actual_display_height = resolution_height - 20;
-float smallest_line = 5;
-float lines_height_diff = (actual_display_height - smallest_line) / (N - 1);
-
-enum class AppState {
-    Menu,
-    Visualization
-};
 
 /// --------------------------------- INITIAL VALUES ----------------------------------------
 
@@ -218,9 +196,14 @@ void Solve(int buttonNumber, RenderWindow &window) {
 
     if (buttonNumber == 1) {
         /// This is the Merge Sort
-
+        /// !!!!! GET BACK ON THIS , IT'S NOT PROPERLY DONE
         Draw_MergeSort(window);
         Draw_SortedAnimation(window);
+    }
+        
+    if (buttonNumber == 2) {
+        /// This si the Quick Sort
+
     }
 
 }

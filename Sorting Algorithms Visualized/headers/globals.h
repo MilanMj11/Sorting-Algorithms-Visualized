@@ -25,7 +25,20 @@ extern float actual_display_height;
 extern float smallest_line;
 extern float lines_height_diff;
 
+extern sf::RectangleShape button[];
+extern sf::Font font;
+extern sf::Text text[];
+
+extern float lineSection;
+extern float buttonHeight;
+
+extern float columnSection;
+extern float buttonWidth;
+
+extern unsigned int fontSize;
+
 enum class AppState {
     Menu,
-    Visualization
+    Visualization,
+    Closing
 };

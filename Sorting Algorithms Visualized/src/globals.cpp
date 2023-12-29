@@ -23,8 +23,3 @@ float space_width = 2.0 * (lines_and_spaces / 10.0);  /// 20% space
 float actual_display_height = resolution_height - 20;
 float smallest_line = 5;
 float lines_height_diff = (actual_display_height - smallest_line) / (N - 1);
-
-enum class AppState {
-    Menu,
-    Visualization
-};

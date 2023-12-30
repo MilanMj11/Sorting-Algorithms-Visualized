@@ -10,6 +10,50 @@
 
 #include <iostream>
 
+// ----------------------------------------- VECTOR RELATED ----------------------------------------------
+
+void init_vector(std::vector<int>& a) {
+    for (int i = 0; i < N; i++)
+        a[i] = i + 1;
+}
+
+void randomise_vector(std::vector<int>& a) {
+    for (int i = 0; i < N; i++)
+        a[i] = i + 1;
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    shuffle(a.begin(), a.end(), g);
+}
+
+void print_vector(std::vector<int>& a) {
+    for (int i = 0; i < N; i++)
+        std::cout << a[i] << ' ';
+}
+
+void reset_vector(std::vector<int>& a) {
+    for (int i = 0; i < N; i++) {
+        a[i] = aux[i];
+    }
+}
+
+bool CheckSorted(std::vector<int>& a) {
+    bool ok = true;
+    for (int i = 1; i < N; i++) {
+        if (a[i] <= a[i - 1]) {
+            ok = false;
+            break;
+        }
+    }
+    return ok;
+}
+
+// ----------------------------------------- VECTOR RELATED ----------------------------------------------
+
+
+// --------------------------------------------- FOR VISUALIZATION ---------------------------------------
+
 void createLines() {
     /// this creates the shape of the rectangles.
     for (int i = 0; i < N; i++) {
@@ -120,6 +164,8 @@ void Draw_SortedAnimation(sf::RenderWindow& window) {
     }
 
 }
+
+// --------------------------------------------- FOR VISUALIZATION ---------------------------------------
 
 
 // ------------------------------------- BUBBLE SORT ------------------------------------------

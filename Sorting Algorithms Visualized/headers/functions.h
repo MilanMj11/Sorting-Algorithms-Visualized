@@ -1,6 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+void init_vector(std::vector<int>& a);
+void randomise_vector(std::vector<int>& a);
+void print_vector(std::vector<int>& a);
+void reset_vector(std::vector<int>& a);
+bool CheckSorted(std::vector<int>& a);
+
 void createLines();
 void createButtons();
 void createText();

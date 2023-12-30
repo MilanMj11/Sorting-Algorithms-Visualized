@@ -12,76 +12,26 @@
 using namespace std;
 using namespace sf;
 
-/// --------------------------------- INITIAL VALUES ----------------------------------------
-
-
-/// --------------------------------- INITIAL VALUES ----------------------------------------
-
-
-void init_vector(vector<int>& a) {
-    for (int i = 0; i < N; i++)
-        a[i] = i + 1;
-}
-
-void randomise_vector(vector<int> &a) {
-    for (int i = 0; i < N; i++)
-        a[i] = i + 1;
-
-    random_device rd;
-    mt19937 g(rd());
-
-    shuffle(a.begin(), a.end(), g);
-}
-
-void print_vector(vector<int> &a) {
-    for (int i = 0; i < N; i++)
-        cout << a[i] << ' ';
-}
-
-void reset_vector(vector<int>& a) {
-    for (int i = 0; i < N; i++) {
-        a[i] = aux[i];
-    }
-}
-
-bool CheckSorted(vector<int>& a) {
-    bool ok = true;
-    for (int i = 1; i < N; i++) {
-        if (a[i] <= a[i - 1]) {
-            ok = false;
-            break;
-        }
-    }
-    return ok;
-}
-
-
 int main()
 {
-    //init_vector(a);
     randomise_vector(a);
     for (int i = 0; i < N; i++) {
         aux[i] = a[i];
     }
-    //print_vector(a);
 
 
-    // ------------------------------------- CREATING LINES -----------------------------
+    // ------------------------ Creating the visuals ----------------------
     createLines();
-    // ------------------------------------- CREATING LINES -----------------------------
-
-
-    // ------------------------------------- CREATING BUTTONS AND TEXT -------------------------------
     createButtons();
     createText();
-    // ------------------------------------- CREATING BUTTONS AND TEXT -------------------------------
+    // ------------------------ Creating the visuals ----------------------
     
-    
+
+
     RenderWindow window(VideoMode(resolution_width, resolution_height), "Sorting Visualized");
     AppState currentState = AppState::Menu;
     int button_number = -1;
     bool solved = false;
- 
 
     while (window.isOpen()) {
         

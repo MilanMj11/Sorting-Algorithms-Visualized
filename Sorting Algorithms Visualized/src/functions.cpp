@@ -110,6 +110,12 @@ void createText() {
     
 }
 
+void destroy_references(){
+    for (int i = 0; i < 9; i++) {
+        text[i].setFont(sf::Font());
+    }
+}
+
 void printVisualization(sf::RenderWindow& window) {
     window.clear();
     for (int t = 0; t < N; t++) {
@@ -147,7 +153,8 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
 
     if (buttonNumber == 2) {
         /// This si the Quick Sort
-
+        Draw_QuickSort(window);
+        Draw_SortedAnimation(window);
     }
 
 }
@@ -271,3 +278,52 @@ void Draw_MergeSort(sf::RenderWindow& window) {
 }
 
 // --------------------------------------- MERGE SORT -----------------------------------------
+
+
+// --------------------------------------- QUICK SORT -----------------------------------------
+
+int partitie(std::vector<int>& a,int low,int high,sf::RenderWindow& window) {
+    int pivot = a[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (a[j] < pivot) {
+            i++;
+            std::swap(a[i], a[j]);
+
+            window.clear();
+
+            rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+            rectangle[i].setFillColor(sf::Color::Red);
+            rectangle[j].setPosition(10 + a[j] * lines_and_spaces, resolution_height - 10);
+            rectangle[j].setFillColor(sf::Color::Red);
+            window.draw(rectangle[i]);
+            window.draw(rectangle[j]);
+
+            for (int t = 0; t < N; t++) {
+                if (t == i or t == j) continue;
+                rectangle[t].setFillColor(sf::Color::White);
+                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                window.draw(rectangle[t]);
+            }
+            window.display();
+
+        }
+    }
+    std::swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+void quicksort(std::vector<int>& a,int low,int high,sf::RenderWindow& window) {
+    if (low < high) {
+        long long mij = partitie(a, low, high, window);
+        quicksort(a, low, mij - 1, window);
+        quicksort(a, mij + 1, high, window);
+    }
+}
+
+void Draw_QuickSort(sf::RenderWindow& window) {
+    quicksort(a, 0, N-1, window);
+}
+
+
+// --------------------------------------- QUICK SORT -----------------------------------------

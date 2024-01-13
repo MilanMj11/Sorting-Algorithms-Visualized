@@ -84,6 +84,7 @@ int main()
         
         
         if (currentState == AppState::Closing) {
+            // destroy_references();
             return 0;
         }
 

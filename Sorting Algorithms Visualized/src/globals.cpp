@@ -9,7 +9,7 @@ int resolution_height = 1080;
 
 const int INF = (1 << 29);
 
-const int N = 1000;
+const int N = 500;
 std::vector<int> a(N);
 std::vector<int> aux(N);
 
@@ -42,7 +42,7 @@ float buttonWidth = (columnSection * 7.0 / 10.0);
 
 sf::RectangleShape button[9];
 
-unsigned int fontSize = 70;
+unsigned int fontSize = 75;
 sf::Font font;
 sf::Text text[9];
 

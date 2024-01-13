@@ -75,12 +75,10 @@ void createButtons() {
 
 void createText() {
 
-    
-    if (!font.loadFromFile("res/fonts/coolvetica/coolvetica rg.otf")) {
+    if (!font.loadFromFile("res/fonts/bodoni/BodoniflfRoman-vmAD.ttf")) {
         std::cout << "Font Error!";
         return;
     }
-    
 
     text[0].setString("Bubble Sort");
     text[1].setString("Merge Sort");

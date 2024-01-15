@@ -7,6 +7,7 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include <list>
 
 #include <iostream>
 
@@ -156,6 +157,11 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
     if (buttonNumber == 2) {
         /// This si the Quick Sort
         Draw_QuickSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 4) {
+        Draw_RadixSort(window);
         Draw_SortedAnimation(window);
     }
 
@@ -329,3 +335,48 @@ void Draw_QuickSort(sf::RenderWindow& window) {
 
 
 // --------------------------------------- QUICK SORT -----------------------------------------
+
+
+// --------------------------------------- RADIX SORT -----------------------------------------
+
+void Draw_RadixSort(sf::RenderWindow& window) {
+    radixsort(a, N-1, 10, window);
+}
+
+void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
+    
+    std::list<int> bucket[(1 << 14) + 5];
+
+    long long p = 1;
+    int maxim = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] > maxim) maxim = a[i];
+    }
+    //memset(bucket,0,sizeof(bucket));
+    while (p <= maxim) {
+        for (int i = 0; i < n; i++) {
+            int cifra = (a[i] / p) % base;
+            bucket[cifra].push_back(a[i]);
+        }
+        int ind = 0;
+        for (int i = 0; i < base; i++) {
+            while (!bucket[i].empty()) {
+                a[++ind] = *(bucket[i].begin());
+                bucket[i].erase(bucket[i].begin());
+
+                window.clear();
+
+                for (int t = 0; t < N; t++) {
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+            }
+        }
+        p *= base;
+    }
+}
+
+// --------------------------------------- RADIX SORT -----------------------------------------

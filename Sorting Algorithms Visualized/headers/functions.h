@@ -25,3 +25,6 @@ void concat(std::vector<int>& a, int st, int dr, sf::RenderWindow& window);
 int partitie(std::vector<int>& a, int low, int high, sf::RenderWindow& window);
 void quicksort(std::vector<int>& a, int low, int high, sf::RenderWindow& window);
 void Draw_QuickSort(sf::RenderWindow& window);
+
+void Draw_RadixSort(sf::RenderWindow& window);
+void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window);

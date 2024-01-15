@@ -31,3 +31,6 @@ void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window);
 
 void Draw_InsertionSort(sf::RenderWindow& window);
 void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window);
+
+void Draw_ShellSort(sf::RenderWindow& window);
+void shellsort(std::vector<int>& a, int n, sf::RenderWindow& window);

@@ -87,7 +87,7 @@ void createText() {
     text[3].setString("Selection Sort");
     text[4].setString("Radix Sort");
     text[5].setString("Heap Sort");
-    text[6].setString("Bucket Sort");
+    text[6].setString("Shell Sort");
     text[7].setString("Counting Sort");
     text[8].setString("Insertion Sort");
 
@@ -160,6 +160,11 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
 
     if (buttonNumber == 4) {
         Draw_RadixSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 6) {
+        Draw_ShellSort(window);
         Draw_SortedAnimation(window);
     }
 
@@ -456,5 +461,49 @@ void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
 }
 
 
-
 // --------------------------------------- INSERTION SORT -----------------------------------------
+
+void Draw_ShellSort(sf::RenderWindow& window) {
+    shellsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
+    for (int gap = n / 2; gap >= 0; gap /= 2) {
+        for (int i = gap; i < n; i++) {
+            int nr = a[i];
+            int ind = i;
+            while (ind >= gap and a[ind - gap] > nr) {
+                a[ind] = a[ind - gap];
+
+                window.clear();
+
+                for (int t = 0; t < N; t++) {
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+                ind -= gap;
+            }
+            a[ind] = nr;
+
+            window.clear();
+
+            for (int t = 0; t < N; t++) {
+                rectangle[t].setFillColor(sf::Color::White);
+                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                window.draw(rectangle[t]);
+            }
+            window.display();
+
+        }
+    }
+}

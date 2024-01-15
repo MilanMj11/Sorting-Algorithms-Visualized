@@ -163,6 +163,11 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
         Draw_SortedAnimation(window);
     }
 
+    if (buttonNumber == 8) {
+        Draw_InsertionSort(window);
+        Draw_SortedAnimation(window);
+    }
+
 }
 
 void Draw_SortedAnimation(sf::RenderWindow& window) {
@@ -328,7 +333,14 @@ void quicksort(std::vector<int>& a,int low,int high,sf::RenderWindow& window) {
 }
 
 void Draw_QuickSort(sf::RenderWindow& window) {
-    quicksort(a, 0, N-1, window);
+    quicksort(a, 0, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
 }
 
 
@@ -339,11 +351,18 @@ void Draw_QuickSort(sf::RenderWindow& window) {
 
 void Draw_RadixSort(sf::RenderWindow& window) {
     radixsort(a, N-1, 10, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
 }
 
 void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
     
-    std::list<int> bucket[(1 << 14) + 5];
+    std::list<int> bucket[(1 << 12) + 5];
 
     long long p = 1;
     int maxim = 0;
@@ -375,6 +394,67 @@ void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
         }
         p *= base;
     }
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
 }
 
 // --------------------------------------- RADIX SORT -----------------------------------------
+
+
+// --------------------------------------- INSERTION SORT -----------------------------------------
+
+
+void Draw_InsertionSort(sf::RenderWindow& window) {
+    insertionsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
+    int key = 0;
+    for (int i = 0; i < n; i++) {
+        key = a[i];
+        for (int j = i - 1; j >= 0; j--) {
+            if (key < a[j]) {
+                std::swap(a[j], a[j + 1]);
+                key = a[j];
+
+                window.clear();
+
+                rectangle[j].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+                rectangle[j].setFillColor(sf::Color::Red);
+                rectangle[j+1].setPosition(10 + a[j+1] * lines_and_spaces, resolution_height - 10);
+                rectangle[j+1].setFillColor(sf::Color::Red);
+                window.draw(rectangle[i]);
+                window.draw(rectangle[j]);
+
+
+                for (int t = 0; t < N; t++) {
+                    if (t == j+1 or t == j) continue;
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+
+            }
+            else break;
+        }
+    }
+    
+}
+
+
+
+// --------------------------------------- INSERTION SORT -----------------------------------------

@@ -28,3 +28,6 @@ void Draw_QuickSort(sf::RenderWindow& window);
 
 void Draw_RadixSort(sf::RenderWindow& window);
 void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window);
+
+void Draw_InsertionSort(sf::RenderWindow& window);
+void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window);

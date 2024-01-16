@@ -355,7 +355,7 @@ void Draw_QuickSort(sf::RenderWindow& window) {
 // --------------------------------------- RADIX SORT -----------------------------------------
 
 void Draw_RadixSort(sf::RenderWindow& window) {
-    radixsort(a, N-1, 10, window);
+    radixsort(a, N, 10, window);
     window.clear();
     for (int t = 0; t < N; t++) {
         rectangle[t].setFillColor(sf::Color::White);
@@ -367,20 +367,19 @@ void Draw_RadixSort(sf::RenderWindow& window) {
 
 void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
     
-    std::list<int> bucket[(1 << 12) + 5];
+    std::list<int> bucket[(1<<8)+5];
 
     long long p = 1;
     int maxim = 0;
     for (int i = 0; i < n; i++) {
         if (a[i] > maxim) maxim = a[i];
     }
-    //memset(bucket,0,sizeof(bucket));
     while (p <= maxim) {
         for (int i = 0; i < n; i++) {
             int cifra = (a[i] / p) % base;
             bucket[cifra].push_back(a[i]);
         }
-        int ind = 0;
+        int ind = -1;
         for (int i = 0; i < base; i++) {
             while (!bucket[i].empty()) {
                 a[++ind] = *(bucket[i].begin());
@@ -475,7 +474,7 @@ void Draw_ShellSort(sf::RenderWindow& window) {
 }
 
 void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
-    for (int gap = n / 2; gap >= 0; gap /= 2) {
+    for (int gap = n / 2; gap >= 1; gap /= 2) {
         for (int i = gap; i < n; i++) {
             int nr = a[i];
             int ind = i;

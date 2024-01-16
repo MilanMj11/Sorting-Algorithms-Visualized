@@ -173,6 +173,11 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
         Draw_SortedAnimation(window);
     }
 
+    if (buttonNumber == 5) {
+        Draw_HeapSort(window);
+        Draw_SortedAnimation(window);
+    }
+
 }
 
 void Draw_SortedAnimation(sf::RenderWindow& window) {
@@ -462,6 +467,10 @@ void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
 
 // --------------------------------------- INSERTION SORT -----------------------------------------
 
+
+
+// --------------------------------------- SHELL SORT -----------------------------------------
+
 void Draw_ShellSort(sf::RenderWindow& window) {
     shellsort(a, N, window);
     window.clear();
@@ -506,3 +515,70 @@ void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
         }
     }
 }
+
+
+// --------------------------------------- SHELL SORT -----------------------------------------
+
+
+
+// --------------------------------------- HEAP SORT -----------------------------------------
+
+
+
+void Draw_HeapSort(sf::RenderWindow& window) {
+    heapsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void heapify_arb(std::vector<int>& a, int n,int node, sf::RenderWindow& window) {
+    if (n == 0) return; /// masura precautie
+    int maxim = node;
+    int st = 2 * node;
+    int dr = 2 * node + 1;
+    if (st < n and a[st] > a[maxim])
+        maxim = st;
+    if (dr < n and a[dr] > a[maxim])
+        maxim = dr;
+    if (node != maxim) { /// root not the biggest
+        std::swap(a[node], a[maxim]);
+
+        window.clear();
+        for (int t = 0; t < N; t++) {
+            rectangle[t].setFillColor(sf::Color::White);
+            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+            window.draw(rectangle[t]);
+        }
+        window.display();
+
+        heapify_arb(a, n, maxim, window);
+    }
+}
+
+void heapsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
+    for (int i = n / 2; i >= 0; i--) /// construiesc max-heapul
+        heapify_arb(a, n, i, window);
+    for (int i = n-1; i >= 0; i--) {
+        std::swap(a[1], a[i]); /// pun maximul in capat
+
+        window.clear();
+        for (int t = 0; t < N; t++) {
+            rectangle[t].setFillColor(sf::Color::White);
+            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+            window.draw(rectangle[t]);
+        }
+        window.display();
+
+        /// maximul fiind mereu varful arborelui adica a[1];
+        heapify_arb(a, i - 1, 1, window); /// get rid of last element
+        /// e deja fixat
+    }
+}
+
+
+// --------------------------------------- HEAP SORT -----------------------------------------

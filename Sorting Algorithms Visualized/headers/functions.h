@@ -38,3 +38,6 @@ void shellsort(std::vector<int>& a, int n, sf::RenderWindow& window);
 void Draw_HeapSort(sf::RenderWindow& window);
 void heapify_arb(std::vector<int>& a, int n, int node, sf::RenderWindow& window);
 void heapsort(std::vector<int>& a, int n, sf::RenderWindow& window);
+
+void selectionsort(std::vector<int>& a, int n, sf::RenderWindow& window);
+void Draw_SelectionSort(sf::RenderWindow& window);

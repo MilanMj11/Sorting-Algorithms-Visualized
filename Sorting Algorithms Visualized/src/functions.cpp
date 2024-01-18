@@ -139,8 +139,6 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
     std::this_thread::sleep_for(duration);
 
     if (buttonNumber == 0) {
-        /// This is the Bubble Sort
-
         Draw_BubbleSort(window);
         Draw_SortedAnimation(window);
     }
@@ -153,8 +151,12 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
     }
 
     if (buttonNumber == 2) {
-        /// This si the Quick Sort
         Draw_QuickSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 3) {
+        Draw_SelectionSort(window);
         Draw_SortedAnimation(window);
     }
 
@@ -523,8 +525,6 @@ void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
 
 // --------------------------------------- HEAP SORT -----------------------------------------
 
-
-
 void Draw_HeapSort(sf::RenderWindow& window) {
     heapsort(a, N, window);
     window.clear();
@@ -582,3 +582,64 @@ void heapsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
 
 
 // --------------------------------------- HEAP SORT -----------------------------------------
+
+// ----------------------------------- SELECTION SORT ----------------------------------------
+
+void selectionsort(std::vector<int>& a, int n,sf::RenderWindow& window)
+{
+    for (int i = 0; i < n - 1; i++) {
+
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[min_idx]) {
+                min_idx = j;
+            }
+
+            window.clear();
+
+            rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+            rectangle[i].setFillColor(sf::Color::Red);
+            rectangle[j].setPosition(10 + a[j] * lines_and_spaces, resolution_height - 10);
+            rectangle[j].setFillColor(sf::Color::Red);
+            window.draw(rectangle[i]);
+            window.draw(rectangle[j]);
+
+            for (int t = 0; t < N; t++) {
+                if (t == i or t == j) continue;
+                rectangle[t].setFillColor(sf::Color::White);
+                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                window.draw(rectangle[t]);
+            }
+
+            window.display();
+        }
+
+        if (min_idx != i) {
+
+            std::swap(a[min_idx], a[i]);
+
+            window.clear();
+            for (int t = 0; t < N; t++) {
+                rectangle[t].setFillColor(sf::Color::White);
+                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                window.draw(rectangle[t]);
+            }
+            window.display();
+
+        }
+    }
+}
+
+void Draw_SelectionSort(sf::RenderWindow& window) {
+    selectionsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+// ----------------------------------- SELECTION SORT ----------------------------------------
+

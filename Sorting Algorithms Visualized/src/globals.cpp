@@ -9,7 +9,7 @@ int resolution_height = 1080;
 
 const int INF = (1 << 29);
 
-const int N = 2500;
+const int N = 400;
 std::vector<int> a(N);
 std::vector<int> aux(N);
 

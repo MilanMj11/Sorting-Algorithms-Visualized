@@ -7,6 +7,7 @@
 #include <random>
 #include <chrono>
 #include <thread>
+#include <list>
 
 #include <iostream>
 
@@ -86,7 +87,7 @@ void createText() {
     text[3].setString("Selection Sort");
     text[4].setString("Radix Sort");
     text[5].setString("Heap Sort");
-    text[6].setString("Bucket Sort");
+    text[6].setString("Shell Sort");
     text[7].setString("Counting Sort");
     text[8].setString("Insertion Sort");
 
@@ -154,6 +155,26 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
     if (buttonNumber == 2) {
         /// This si the Quick Sort
         Draw_QuickSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 4) {
+        Draw_RadixSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 6) {
+        Draw_ShellSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 8) {
+        Draw_InsertionSort(window);
+        Draw_SortedAnimation(window);
+    }
+
+    if (buttonNumber == 5) {
+        Draw_HeapSort(window);
         Draw_SortedAnimation(window);
     }
 
@@ -322,8 +343,242 @@ void quicksort(std::vector<int>& a,int low,int high,sf::RenderWindow& window) {
 }
 
 void Draw_QuickSort(sf::RenderWindow& window) {
-    quicksort(a, 0, N-1, window);
+    quicksort(a, 0, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
 }
 
 
 // --------------------------------------- QUICK SORT -----------------------------------------
+
+
+// --------------------------------------- RADIX SORT -----------------------------------------
+
+void Draw_RadixSort(sf::RenderWindow& window) {
+    radixsort(a, N, 10, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
+    
+    std::list<int> bucket[(1<<8)+5];
+
+    long long p = 1;
+    int maxim = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] > maxim) maxim = a[i];
+    }
+    while (p <= maxim) {
+        for (int i = 0; i < n; i++) {
+            int cifra = (a[i] / p) % base;
+            bucket[cifra].push_back(a[i]);
+        }
+        int ind = -1;
+        for (int i = 0; i < base; i++) {
+            while (!bucket[i].empty()) {
+                a[++ind] = *(bucket[i].begin());
+                bucket[i].erase(bucket[i].begin());
+
+                window.clear();
+
+                for (int t = 0; t < N; t++) {
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+            }
+        }
+        p *= base;
+    }
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+// --------------------------------------- RADIX SORT -----------------------------------------
+
+
+// --------------------------------------- INSERTION SORT -----------------------------------------
+
+
+void Draw_InsertionSort(sf::RenderWindow& window) {
+    insertionsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
+    int key = 0;
+    for (int i = 0; i < n; i++) {
+        key = a[i];
+        for (int j = i - 1; j >= 0; j--) {
+            if (key < a[j]) {
+                std::swap(a[j], a[j + 1]);
+                key = a[j];
+
+                window.clear();
+
+                rectangle[j].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+                rectangle[j].setFillColor(sf::Color::Red);
+                rectangle[j+1].setPosition(10 + a[j+1] * lines_and_spaces, resolution_height - 10);
+                rectangle[j+1].setFillColor(sf::Color::Red);
+                window.draw(rectangle[i]);
+                window.draw(rectangle[j]);
+
+
+                for (int t = 0; t < N; t++) {
+                    if (t == j+1 or t == j) continue;
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+
+            }
+            else break;
+        }
+    }
+    
+}
+
+
+// --------------------------------------- INSERTION SORT -----------------------------------------
+
+
+
+// --------------------------------------- SHELL SORT -----------------------------------------
+
+void Draw_ShellSort(sf::RenderWindow& window) {
+    shellsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
+    for (int gap = n / 2; gap >= 1; gap /= 2) {
+        for (int i = gap; i < n; i++) {
+            int nr = a[i];
+            int ind = i;
+            while (ind >= gap and a[ind - gap] > nr) {
+                a[ind] = a[ind - gap];
+
+                window.clear();
+
+                for (int t = 0; t < N; t++) {
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+                ind -= gap;
+            }
+            a[ind] = nr;
+
+            window.clear();
+
+            for (int t = 0; t < N; t++) {
+                rectangle[t].setFillColor(sf::Color::White);
+                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                window.draw(rectangle[t]);
+            }
+            window.display();
+
+        }
+    }
+}
+
+
+// --------------------------------------- SHELL SORT -----------------------------------------
+
+
+
+// --------------------------------------- HEAP SORT -----------------------------------------
+
+
+
+void Draw_HeapSort(sf::RenderWindow& window) {
+    heapsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+void heapify_arb(std::vector<int>& a, int n,int node, sf::RenderWindow& window) {
+    if (n == 0) return; /// masura precautie
+    int maxim = node;
+    int st = 2 * node;
+    int dr = 2 * node + 1;
+    if (st < n and a[st] > a[maxim])
+        maxim = st;
+    if (dr < n and a[dr] > a[maxim])
+        maxim = dr;
+    if (node != maxim) { /// root not the biggest
+        std::swap(a[node], a[maxim]);
+
+        window.clear();
+        for (int t = 0; t < N; t++) {
+            rectangle[t].setFillColor(sf::Color::White);
+            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+            window.draw(rectangle[t]);
+        }
+        window.display();
+
+        heapify_arb(a, n, maxim, window);
+    }
+}
+
+void heapsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
+    for (int i = n / 2; i >= 0; i--) /// construiesc max-heapul
+        heapify_arb(a, n, i, window);
+    for (int i = n-1; i >= 0; i--) {
+        std::swap(a[1], a[i]); /// pun maximul in capat
+
+        window.clear();
+        for (int t = 0; t < N; t++) {
+            rectangle[t].setFillColor(sf::Color::White);
+            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+            window.draw(rectangle[t]);
+        }
+        window.display();
+
+        /// maximul fiind mereu varful arborelui adica a[1];
+        heapify_arb(a, i - 1, 1, window); /// get rid of last element
+        /// e deja fixat
+    }
+}
+
+
+// --------------------------------------- HEAP SORT -----------------------------------------

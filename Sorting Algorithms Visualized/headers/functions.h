@@ -41,3 +41,6 @@ void heapsort(std::vector<int>& a, int n, sf::RenderWindow& window);
 
 void selectionsort(std::vector<int>& a, int n, sf::RenderWindow& window);
 void Draw_SelectionSort(sf::RenderWindow& window);
+
+void cocktailsort(std::vector<int>& a, int n, sf::RenderWindow& window);
+void Draw_CocktailSort(sf::RenderWindow& window);

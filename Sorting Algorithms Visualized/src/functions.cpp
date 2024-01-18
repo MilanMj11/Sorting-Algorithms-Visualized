@@ -88,7 +88,7 @@ void createText() {
     text[4].setString("Radix Sort");
     text[5].setString("Heap Sort");
     text[6].setString("Shell Sort");
-    text[7].setString("Counting Sort");
+    text[7].setString("Cocktail Sort");
     text[8].setString("Insertion Sort");
 
     float centerX, centerY;
@@ -140,45 +140,42 @@ void Solve(int buttonNumber, sf::RenderWindow& window) {
 
     if (buttonNumber == 0) {
         Draw_BubbleSort(window);
-        Draw_SortedAnimation(window);
     }
-
     if (buttonNumber == 1) {
         /// This is the Merge Sort
         /// !!!!! GET BACK ON THIS , IT'S NOT PROPERLY DONE
         Draw_MergeSort(window);
-        Draw_SortedAnimation(window);
     }
 
     if (buttonNumber == 2) {
         Draw_QuickSort(window);
-        Draw_SortedAnimation(window);
     }
 
     if (buttonNumber == 3) {
         Draw_SelectionSort(window);
-        Draw_SortedAnimation(window);
     }
 
     if (buttonNumber == 4) {
         Draw_RadixSort(window);
-        Draw_SortedAnimation(window);
-    }
-
-    if (buttonNumber == 6) {
-        Draw_ShellSort(window);
-        Draw_SortedAnimation(window);
-    }
-
-    if (buttonNumber == 8) {
-        Draw_InsertionSort(window);
-        Draw_SortedAnimation(window);
     }
 
     if (buttonNumber == 5) {
         Draw_HeapSort(window);
-        Draw_SortedAnimation(window);
     }
+
+    if (buttonNumber == 6) {
+        Draw_ShellSort(window);
+    }
+
+    if (buttonNumber == 7) {
+        Draw_CocktailSort(window);
+    }
+
+    if (buttonNumber == 8) {
+        Draw_InsertionSort(window);
+    }
+
+    Draw_SortedAnimation(window);
 
 }
 
@@ -643,3 +640,91 @@ void Draw_SelectionSort(sf::RenderWindow& window) {
 
 // ----------------------------------- SELECTION SORT ----------------------------------------
 
+
+// ----------------------------------- COCKTAIL SORT -----------------------------------------
+
+
+void cocktailsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
+    bool swapped = true;
+    int start = 0;
+    int end = n - 1;
+    while (swapped) {
+
+        window.clear();
+        for (int t = 0; t < N; t++) {
+            rectangle[t].setFillColor(sf::Color::White);
+            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+            window.draw(rectangle[t]);
+        }
+        window.display();
+
+        swapped = false;
+        for (int i = start; i < end; ++i) {
+            if (a[i] > a[i + 1]) {
+                std::swap(a[i], a[i + 1]);
+                swapped = true;
+
+                window.clear();
+                rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+                rectangle[i].setFillColor(sf::Color::Red);
+                rectangle[i + 1].setPosition(10 + a[i + 1] * lines_and_spaces, resolution_height - 10);
+                rectangle[i + 1].setFillColor(sf::Color::Red);
+                window.draw(rectangle[i]);
+                window.draw(rectangle[i + 1]);
+
+
+                for (int t = 0; t < N; t++) {
+                    if (t == i or t == i + 1) continue;
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+            }
+        }
+        if (!swapped)
+            break;
+
+        swapped = false;
+        --end;
+        for (int i = end - 1; i >= start; --i) {
+            if (a[i] > a[i + 1]) {
+                std::swap(a[i], a[i + 1]);
+                swapped = true;
+
+                window.clear();
+                rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+                rectangle[i].setFillColor(sf::Color::Red);
+                rectangle[i+1].setPosition(10 + a[i+1] * lines_and_spaces, resolution_height - 10);
+                rectangle[i+1].setFillColor(sf::Color::Red);
+                window.draw(rectangle[i]);
+                window.draw(rectangle[i+1]);
+
+
+                for (int t = 0; t < N; t++) {
+                    if (t == i or t == i+1) continue;
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+                window.display();
+
+            }
+        }
+        ++start;
+    }
+}
+
+void Draw_CocktailSort(sf::RenderWindow& window) {
+    cocktailsort(a, N, window);
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
+// ----------------------------------- COCKTAIL SORT -----------------------------------------

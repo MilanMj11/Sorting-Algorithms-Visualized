@@ -9,6 +9,8 @@ bool CheckSorted(std::vector<int>& a);
 
 void destroy_references();
 
+void slow_down();
+
 void createLines();
 void createButtons();
 void createText();

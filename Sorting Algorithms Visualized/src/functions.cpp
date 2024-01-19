@@ -13,6 +13,10 @@
 
 // ----------------------------------------- VECTOR RELATED ----------------------------------------------
 
+void slow_down() {
+    for (volatile int slow = 0; slow < 61337; ++slow);
+}
+
 void init_vector(std::vector<int>& a) {
     for (int i = 0; i < N; i++)
         a[i] = i + 1;
@@ -126,6 +130,18 @@ void printVisualization(sf::RenderWindow& window) {
     }
     window.display();
 }
+
+void printSlowVisualization(sf::RenderWindow& window) {
+    window.clear();
+    for (int t = 0; t < N; t++) {
+        slow_down();
+        rectangle[t].setFillColor(sf::Color::White);
+        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+        window.draw(rectangle[t]);
+    }
+    window.display();
+}
+
 
 void Solve(int buttonNumber, sf::RenderWindow& window) {
 
@@ -279,22 +295,23 @@ void merge_sort(std::vector<int>& a, int st, int dr, sf::RenderWindow& window) {
 
     merge_sort(a, st, mij, window);
 
-    printVisualization(window);
+    printSlowVisualization(window);
 
     merge_sort(a, mij + 1, dr, window);
 
-    printVisualization(window);
+    printSlowVisualization(window);
 
     concat(a, st, dr, window);
 
 
-    printVisualization(window);
+    printSlowVisualization(window);
 
 
 }
 
 void Draw_MergeSort(sf::RenderWindow& window) {
     merge_sort(a, 0, N - 1, window);
+    printSlowVisualization(window);
 }
 
 // --------------------------------------- MERGE SORT -----------------------------------------
@@ -321,6 +338,7 @@ int partitie(std::vector<int>& a,int low,int high,sf::RenderWindow& window) {
 
             for (int t = 0; t < N; t++) {
                 if (t == i or t == j) continue;
+                slow_down();
                 rectangle[t].setFillColor(sf::Color::White);
                 rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
                 window.draw(rectangle[t]);
@@ -342,14 +360,8 @@ void quicksort(std::vector<int>& a,int low,int high,sf::RenderWindow& window) {
 }
 
 void Draw_QuickSort(sf::RenderWindow& window) {
-    quicksort(a, 0, N, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    quicksort(a, 0, N-1, window);
+    printVisualization(window);
 }
 
 
@@ -360,13 +372,7 @@ void Draw_QuickSort(sf::RenderWindow& window) {
 
 void Draw_RadixSort(sf::RenderWindow& window) {
     radixsort(a, N, 10, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printSlowVisualization(window);
 }
 
 void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
@@ -389,26 +395,13 @@ void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
                 a[++ind] = *(bucket[i].begin());
                 bucket[i].erase(bucket[i].begin());
 
-                window.clear();
-
-                for (int t = 0; t < N; t++) {
-                    rectangle[t].setFillColor(sf::Color::White);
-                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-                    window.draw(rectangle[t]);
-                }
-                window.display();
+                printSlowVisualization(window);
 
             }
         }
         p *= base;
     }
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printSlowVisualization(window);
 }
 
 // --------------------------------------- RADIX SORT -----------------------------------------
@@ -419,13 +412,7 @@ void radixsort(std::vector<int>& a, int n, int base, sf::RenderWindow& window) {
 
 void Draw_InsertionSort(sf::RenderWindow& window) {
     insertionsort(a, N, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printVisualization(window);
 }
 
 void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
@@ -472,13 +459,7 @@ void insertionsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
 
 void Draw_ShellSort(sf::RenderWindow& window) {
     shellsort(a, N, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printSlowVisualization(window);
 }
 
 void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
@@ -489,14 +470,7 @@ void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
             while (ind >= gap and a[ind - gap] > nr) {
                 a[ind] = a[ind - gap];
 
-                window.clear();
-
-                for (int t = 0; t < N; t++) {
-                    rectangle[t].setFillColor(sf::Color::White);
-                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-                    window.draw(rectangle[t]);
-                }
-                window.display();
+                printSlowVisualization(window);
 
                 ind -= gap;
             }
@@ -504,12 +478,7 @@ void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
 
             window.clear();
 
-            for (int t = 0; t < N; t++) {
-                rectangle[t].setFillColor(sf::Color::White);
-                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-                window.draw(rectangle[t]);
-            }
-            window.display();
+            // printSlowVisualization(window);
 
         }
     }
@@ -524,13 +493,7 @@ void shellsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
 
 void Draw_HeapSort(sf::RenderWindow& window) {
     heapsort(a, N, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printSlowVisualization(window);
 }
 
 void heapify_arb(std::vector<int>& a, int n,int node, sf::RenderWindow& window) {
@@ -545,13 +508,7 @@ void heapify_arb(std::vector<int>& a, int n,int node, sf::RenderWindow& window) 
     if (node != maxim) { /// root not the biggest
         std::swap(a[node], a[maxim]);
 
-        window.clear();
-        for (int t = 0; t < N; t++) {
-            rectangle[t].setFillColor(sf::Color::White);
-            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-            window.draw(rectangle[t]);
-        }
-        window.display();
+        printSlowVisualization(window);
 
         heapify_arb(a, n, maxim, window);
     }
@@ -563,13 +520,7 @@ void heapsort(std::vector<int>& a,int n, sf::RenderWindow& window) {
     for (int i = n-1; i >= 0; i--) {
         std::swap(a[1], a[i]); /// pun maximul in capat
 
-        window.clear();
-        for (int t = 0; t < N; t++) {
-            rectangle[t].setFillColor(sf::Color::White);
-            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-            window.draw(rectangle[t]);
-        }
-        window.display();
+        printSlowVisualization(window);
 
         /// maximul fiind mereu varful arborelui adica a[1];
         heapify_arb(a, i - 1, 1, window); /// get rid of last element
@@ -590,38 +541,35 @@ void selectionsort(std::vector<int>& a, int n,sf::RenderWindow& window)
         for (int j = i + 1; j < n; j++) {
             if (a[j] < a[min_idx]) {
                 min_idx = j;
+
+                window.clear();
+
+                rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
+                rectangle[i].setFillColor(sf::Color::Red);
+                rectangle[j].setPosition(10 + a[j] * lines_and_spaces, resolution_height - 10);
+                rectangle[j].setFillColor(sf::Color::Red);
+                window.draw(rectangle[i]);
+                window.draw(rectangle[j]);
+
+                for (int t = 0; t < N; t++) {
+                    if (t == i or t == j) continue;
+                    for (volatile int j = 0; j < 30000; ++j);
+                    rectangle[t].setFillColor(sf::Color::White);
+                    rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
+                    window.draw(rectangle[t]);
+                }
+
+                window.display();
+            
             }
-
-            window.clear();
-
-            rectangle[i].setPosition(10 + a[i] * lines_and_spaces, resolution_height - 10);
-            rectangle[i].setFillColor(sf::Color::Red);
-            rectangle[j].setPosition(10 + a[j] * lines_and_spaces, resolution_height - 10);
-            rectangle[j].setFillColor(sf::Color::Red);
-            window.draw(rectangle[i]);
-            window.draw(rectangle[j]);
-
-            for (int t = 0; t < N; t++) {
-                if (t == i or t == j) continue;
-                rectangle[t].setFillColor(sf::Color::White);
-                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-                window.draw(rectangle[t]);
-            }
-
-            window.display();
+            
         }
 
         if (min_idx != i) {
 
             std::swap(a[min_idx], a[i]);
 
-            window.clear();
-            for (int t = 0; t < N; t++) {
-                rectangle[t].setFillColor(sf::Color::White);
-                rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-                window.draw(rectangle[t]);
-            }
-            window.display();
+            printSlowVisualization(window);
 
         }
     }
@@ -629,13 +577,7 @@ void selectionsort(std::vector<int>& a, int n,sf::RenderWindow& window)
 
 void Draw_SelectionSort(sf::RenderWindow& window) {
     selectionsort(a, N, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printSlowVisualization(window);
 }
 
 // ----------------------------------- SELECTION SORT ----------------------------------------
@@ -650,13 +592,7 @@ void cocktailsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
     int end = n - 1;
     while (swapped) {
 
-        window.clear();
-        for (int t = 0; t < N; t++) {
-            rectangle[t].setFillColor(sf::Color::White);
-            rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-            window.draw(rectangle[t]);
-        }
-        window.display();
+        printVisualization(window);
 
         swapped = false;
         for (int i = start; i < end; ++i) {
@@ -718,13 +654,7 @@ void cocktailsort(std::vector<int>& a, int n, sf::RenderWindow& window) {
 
 void Draw_CocktailSort(sf::RenderWindow& window) {
     cocktailsort(a, N, window);
-    window.clear();
-    for (int t = 0; t < N; t++) {
-        rectangle[t].setFillColor(sf::Color::White);
-        rectangle[t].setPosition(10 + a[t] * lines_and_spaces, resolution_height - 10);
-        window.draw(rectangle[t]);
-    }
-    window.display();
+    printVisualization(window);
 }
 
 // ----------------------------------- COCKTAIL SORT -----------------------------------------

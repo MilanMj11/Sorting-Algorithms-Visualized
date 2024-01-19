@@ -28,6 +28,6 @@ This project showcases the visualization of 9 different sorting algorithms, whic
 9. Insertion Sort
 
 ## Notes
-The visualization was done so that it can be compatible with any resolution that you choose ( the standard being 1920*1080 ) . Each algorithm sorts the same array of 1000 randomised elements, but each execution randomises the array in a different way. 
+The visualization was done so that it can be compatible with any resolution that you choose ( the standard being 1920*1080 ) . Each algorithm sorts the same array of 1000 randomised elements, but each execution randomises the array in a different way ( meaning I don't have a set seed beforehand ) . 
 The project was made in such a way that each algorithm takes approximately the same time to execute, which is why some faster sorting algorithms were intentionally slowed down so that they could be viewed in more detail.
 

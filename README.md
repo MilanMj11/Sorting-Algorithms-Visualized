@@ -35,3 +35,12 @@ The project was made in such a way that each algorithm takes approximately the s
 The SFML library was not used to it's fullest potential, in fact, I've used the simplest elements such as : Creating and drawing rectangles, Creating a window and Writing Text.
 Each element from the array is represented by a Rectangle which is taller or shorter depending on the value of the element.
 
+## Important ! 
+Depending on how fast a computer is, the speed of the visualizations might differ. If the app is too slow, you might need to change the slow_down() function so that it iterates to a lower number than the default 61337.
+
+```bash
+void slow_down() {
+    for (volatile int slow = 0; slow < 61337; ++slow);
+}
+```
+

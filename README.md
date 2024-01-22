@@ -36,11 +36,11 @@ The SFML library was not used to it's fullest potential, in fact, I've used the 
 Each element from the array is represented by a Rectangle which is taller or shorter depending on the value of the element.
 
 ## Important ! 
-Depending on how fast a computer is, the speed of the visualizations might differ. If the app is too slow, you might need to change the slow_down() function so that it iterates to a lower number than the default 61337.
+Depending on how fast a computer is, the speed of the visualizations might differ. If the app is too slow or too fast, you might need to change the variable SLOW in globals.cpp. The default is 21337
+
+The bigger SLOW is, the slower the app will run and vice versa.
 
 ```bash
-void slow_down() {
-    for (volatile int slow = 0; slow < 61337; ++slow);
-}
+const int SLOW = 21337;
 ```
 

@@ -11,6 +11,8 @@ extern int resolution_height;
 
 extern const int INF;
 
+extern const int SLOW;
+
 extern const int N;
 extern std::vector<int> a;
 extern std::vector<int> aux;

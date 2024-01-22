@@ -14,7 +14,7 @@
 // ----------------------------------------- VECTOR RELATED ----------------------------------------------
 
 void slow_down() {
-    for (volatile int slow = 0; slow < 61337; ++slow);
+    for (volatile int slow = 0; slow < SLOW; ++slow);
 }
 
 void init_vector(std::vector<int>& a) {

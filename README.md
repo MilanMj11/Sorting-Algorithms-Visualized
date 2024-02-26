@@ -1,7 +1,7 @@
 # Sorting Algorithms Visualized with C++ and SFML
 
 ## Overview
-This project showcases the visualization of 9 different sorting algorithms, which are not necessarily perfectly optimised because the purpose of this project is to show how each of them modelates the array to be sorted, not to obtain the fastest time of execution.
+This project showcases the visualization of 9 different sorting algorithms, which are not necessarily perfectly optimised because the purpose of this project is to show how each of them shapes the array to be sorted, not to obtain the fastest time of execution.
 
 ## Highlights
 
